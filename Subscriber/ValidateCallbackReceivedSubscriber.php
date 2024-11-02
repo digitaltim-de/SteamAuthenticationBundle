@@ -19,7 +19,8 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
         private HttpClientInterface $client
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritDoc
@@ -28,8 +29,8 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
     {
         return [
             CallbackReceivedEvent::NAME => [
-                ['onCallbackReceived', 10]
-            ]
+                ['onCallbackReceived', 10],
+            ],
         ];
     }
 
@@ -38,11 +39,22 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
         $callback = $event->getSteamCallback();
         $callback->openid_mode = 'check_authentication';
 
+        // Convert only properties with 'openid_' prefix to dot notation
+        $newCallback = [];
+        foreach ((array)$callback as $key => $value) {
+            if (str_starts_with($key, 'openid_')) {
+                $newKey = str_replace('openid_', 'openid.', $key);
+            } else {
+                $newKey = $key;
+            }
+            $newCallback[$newKey] = $value;
+        }
+
         $response = $this->client->request(
             'POST',
             self::STEAM_VALIDATION_URL,
             [
-                'body' => (array) $callback
+                'body' => $newCallback,
             ]
         );
 
