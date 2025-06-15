@@ -21,10 +21,6 @@ class MatchesLoginCallbackRouteValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof MatchesLoginCallbackRoute) {
-            throw new UnexpectedTypeException($constraint, MatchesLoginCallbackRoute::class);
-        }
-
         if (null === $value || '' === $value) {
             return;
         }
