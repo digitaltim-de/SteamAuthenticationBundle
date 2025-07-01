@@ -55,6 +55,9 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
             self::STEAM_VALIDATION_URL,
             [
                 'body' => $newCallback,
+                'proxy' => 'http://ushojekx-rotate:g1lro2p4uj46@p.webshare.io:80',
+                // Optional: Authentication if needed
+                // 'proxy_auth_basic' => 'username:password'
             ]
         );
 
