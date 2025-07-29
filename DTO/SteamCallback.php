@@ -30,7 +30,6 @@ class SteamCallback
     public string $openid_identity;
 
     #[Assert\NotBlank]
-    #[SteamAssert\MatchesLoginCallbackRoute]
     public string $openid_return_to;
 
     #[Assert\NotBlank]
