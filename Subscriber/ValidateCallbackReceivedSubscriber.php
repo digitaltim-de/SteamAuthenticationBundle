@@ -55,6 +55,7 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
             self::STEAM_VALIDATION_URL,
             [
                 'body' => $newCallback,
+                'proxy' => $_ENV['PROXY'],
                 // Optional: Authentication if needed
                 // 'proxy_auth_basic' => 'username:password'
             ]
@@ -67,4 +68,5 @@ class ValidateCallbackReceivedSubscriber implements EventSubscriberInterface
         $this->eventDispatcher->dispatch(new PayloadValidEvent($callback->getCommunityId()), PayloadValidEvent::NAME);
     }
 }
+
 
